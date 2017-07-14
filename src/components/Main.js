@@ -23,8 +23,8 @@ function getRangeRandom(low,high){
 class ImgFigure extends React.Component{
   render(){
       var styleObj={};
-      if(this.props.arrage.pos){
-        styleObj=this.props.arrage.pos;
+      if(this.props.arrange.pos){
+        styleObj=this.props.arrange.pos;
       }
     return(
      <figure className="img-figure" style={styleObj}>
@@ -56,8 +56,8 @@ var AppComponent=React.createClass({
   },
 
 
-   rearrage(centerIndex){
-     var imgsArrageArr=this.state.imgsArrageArr,
+   rearrange(centerIndex){
+     var imgsArrangeArr=this.state.imgsArrangeArr,
      Constant=this.Constant,
      centerPos=Constant.centerPos,
      hPosRange=Constant.hPosRange,
@@ -68,45 +68,45 @@ var AppComponent=React.createClass({
      vPosRangeTopY=vPosRange.topY,
      vPosRangeX=vPosRange.x,
 
-     imgsArrageTopArr=[],
+     imgsArrangeTopArr=[],
      topImgNum=Math.ceil(Math.random()*2),
      topImgSpliceIndex=0,
-     imgsArrageCenterArr=imgsArrageArr.splice(centerIndex,1)
+     imgsArrangeCenterArr=imgsArrangeArr.splice(centerIndex,1)
 
-     imgsArrageCenterArr[0].pos=centerPos;
-     topImgSpliceIndex=Math.ceil(Math.random()*(imgsArrageArr.length0topImgNum))
+     imgsArrangeCenterArr[0].pos=centerPos;
+     topImgSpliceIndex=Math.ceil(Math.random()*(imgsArrangeArr.length0topImgNum))
 
-     imgsArrageTopArr=imgsArrageArr.splice(topImgSpliceIndex,topImgNum)
-     imgsArrageTopArr.forEach(function(value,index){
-       imgsArrageTopArr[index].pos={
+     imgsArrangeTopArr=imgsArrangeArr.splice(topImgSpliceIndex,topImgNum)
+     imgsArrangeTopArr.forEach(function(value,index){
+       imgsArrangeTopArr[index].pos={
          top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
          left:getRangeRandom(vPosRangeX[0],vPosRangeX[1])
        }
      });
-     for(var i=0,j=imgsArrageArr.length,k=j/2;i<j;i++){
+     for(var i=0,j=imgsArrangeArr.length,k=j/2;i<j;i++){
        var hPosRangeLORX=null;
        if(i<k){
          hPosRangeLORX=hPosRangeLeftSecX;
        }else{
          hPosRangeLORX=hPosRangeRightSecX;
        }
-       imgsArrageArr[i].pos={
+       imgsArrangeArr[i].pos={
          top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
          left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
        }
      }
 
-     if(imgsArrageTopArr&&imgsArrageTopArr[0]){
-       imgsArrageArr.splice(topImgSpliceIndex,0,imgsArrageTopArr[0]);
+     if(imgsArrangeTopArr&&imgsArrangeTopArr[0]){
+       imgsArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
      }
-     imgsArrageArr.splice(centerIndex,0,imgsArrageCenterArr[0])
+     imgsArrangeArr.splice(centerIndex,0,imgsArrangeCenterArr[0])
      this.setState({
-       imgsArrageArr:imgsArrageArr
+       imgsArrangeArr:imgsArrangeArr
      })
   },
   getInitialState(){
     return{
-      imgsArrageArr:[]
+      imgsArrangeArr:[]
     }
   },
   componentDidMount(){
@@ -138,21 +138,21 @@ var AppComponent=React.createClass({
     this.Constant.vPosRange.x[0] = halfStageW - imgW;
     this.Constant.vPosRange.x[1] = halfStageW;
 
-    this.rearrage(0);
+    this.rearrange(0);
   },
   render() {
     var controllerUnits=[],
     imgFigures=[];
     imageDatas.forEach(function(value,index) {
-      if(!this.state.imgsArrageArr[index]){
-        this.state.imgsArrageArr[index]={
+      if(!this.state.imgsArrangeArr[index]){
+        this.state.imgsArrangeArr[index]={
           pos:{
             left:0,
             top:0
           }
         }
       }
-      imgFigures.push(<ImgFigure data={value} ref={"imgFigure"+index} arrage={this.state.imgsArrageArr[index]}/>)
+      imgFigures.push(<ImgFigure data={value} ref={"imgFigure"+index} arrange={this.state.imgsArrangeArr[index]}/>)
     }.bind(this));
     return (
      <section className="stage" ref="stage">
